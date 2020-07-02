@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc --watch",
-    "build": "tsc"
+    "build": "tsc",
+    "deploy": "tsc && mira deploy --file=mira-tut-01-stack.js",
+    "undeploy": "mira undeploy --file=mira-tut-01-stack.js"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.36.1",
@@ -23,6 +25,7 @@
     "@aws-cdk/aws-s3-notifications": "1.36.1",
     "@aws-cdk/aws-sqs": "1.36.1",
     "@aws-cdk/core": "1.36.1",
+    "@aws-cdk/aws-iam": "1.36.1",
     "@mobileposse/auto-delete-bucket": "1.46.0",
     "mira": "1.0.0"
   }
