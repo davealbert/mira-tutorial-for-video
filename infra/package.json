@@ -1,9 +1,51 @@
 {
   "name": "mira-tutorial-1-infra",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A tutorial of NearForm/Mira",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "1.36.1",
+    "@types/node": "^10.17.24",
+    "aws-cdk": "1.36.1",
+    "concurrently": "^5.2.0",
+    "jest": "^25.5.0",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@aws-cdk/core": "1.36.1",
+    "mira": "2.3.0",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+  
+
+
+
+
+
+    "@aws-cdk/aws-sqs": "1.36.1",
+    "@aws-cdk/aws-lambda": "1.36.1",
+    "@aws-cdk/aws-events-targets": "1.36.1",
+    "@aws-cdk/aws-aws-events": "1.36.1",
   }
 }
