@@ -18,34 +18,14 @@
   "dependencies": {
     "@aws-cdk/core": "1.36.1",
     "mira": "2.3.0",
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-  
-
-
-
-
-
     "@aws-cdk/aws-sqs": "1.36.1",
     "@aws-cdk/aws-lambda": "1.36.1",
     "@aws-cdk/aws-events-targets": "1.36.1",
     "@aws-cdk/aws-aws-events": "1.36.1",
+
+    
+    "@aws-cdk/aws-s3-notifications": "1.36.1",
+    "@aws-cdk/aws-s3": "1.36.1",
+    "@mobileposse/auto-delete-bucket": "^1.46.0"
   }
 }
