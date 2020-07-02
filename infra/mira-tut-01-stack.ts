@@ -14,6 +14,14 @@ export default class PlGithubEtlStack extends MiraStack {
     // Lambda-1 -- CRON Job to create SQS-1 message to kick off process
 
 
+    // S3
+
+
+    // SQS-2 
+
+
+    // Lambda-2 -- Process SQS-1 message from SQS-1 and write file to S3
+    
     
   }
 }
