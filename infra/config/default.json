@@ -1,0 +1,22 @@
+{
+  "account": "<YOUR AWS ACCOUNT>",
+  "region": "eu-west-3",
+  "app": {
+    "name": "mira-tutorial",
+    "prefix": "davealbert-mira"
+  },
+  "baseDomain": "mira-tutorial",
+  "accounts": [
+    {
+      "name": "Default",
+      "env": {
+        "account": "<YOUR AWS ACCOUNT>",
+        "region": "eu-west-3"
+      },
+      "profile": "default",
+      "withDomain": true,
+      "webAppUrl": "davealbert-mira.davealbert-mira",
+      "requireManualApproval": false
+    },
+  ]
+}
