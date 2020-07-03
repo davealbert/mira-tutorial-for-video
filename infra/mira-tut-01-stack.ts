@@ -12,6 +12,15 @@ const BASE_NAME = 'davealbert-MiraTutorial01'
 const SQS_BASE_NAME = `${BASE_NAME}SQS`
 const LAMBDA_ASSET_1 = '../lambda-1/lambda-1.zip'
 
+
+
+import { AutoDeleteBucket } from '@mobileposse/auto-delete-bucket'
+import { SqsDestination } from '@aws-cdk/aws-s3-notifications'
+import { EventType } from '@aws-cdk/aws-s3'
+const BUCKET_NAME = `${BASE_NAME.toLowerCase()}-bucket`
+const LAMBDA_ASSET_2 = '../lambda-2/lambda-2.zip'
+
+
 export default class PlGithubEtlStack extends MiraStack {
   constructor(parent: Construct) {
     super(parent, PlGithubEtlStack.name, {
@@ -25,6 +34,7 @@ export default class PlGithubEtlStack extends MiraStack {
       fifo: true,
       queueName: `${SQS_BASE_NAME}1.fifo`
     })
+
 
     // Lambda-1 -- CRON Job to create SQS-1 message to kick off process
     const lambda1 = new LambdaFunction(this, `${BASE_NAME}Lambda1Handler`, {
@@ -44,8 +54,12 @@ export default class PlGithubEtlStack extends MiraStack {
     cron.addTarget(new LambdaFunctionTarget(lambda1))
     sqs1.grantSendMessages(lambda1)
 
-    // S3
 
+    // S3
+    const bucket = new AutoDeleteBucket(this, BUCKET_NAME, {
+      bucketName: BUCKET_NAME,
+      versioned: true
+    })
 
     // SQS-2 
 
