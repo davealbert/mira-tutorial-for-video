@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc --watch",
-    "build": "tsc",
+    "build": "concurrently 'tsc' 'npm run build:lambda1'",
+    "build:lambda1": "cd ../lambda-1/; rm lambda-1.zip; npm ci; zip -r lambda-1.zip *",
+    "build:lambda2": "cd ../lambda-2/; rm lambda-2.zip; npm ci; zip -r lambda-2.zip *",
     "deploy": "tsc && mira deploy --file=mira-tut-01-stack.js",
     "undeploy": "mira undeploy --file=mira-tut-01-stack.js"
   },
