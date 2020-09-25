@@ -1,7 +1,11 @@
 const crypto = require('crypto')
 const SQS = require('aws-sdk/clients/sqs')
+const S3 = require('aws-sdk/clients/s3')
+
 const REGION = process.env.REGION
+const BUCKET_NAME = process.env.BUCKET_NAME
 const sqs = new SQS({region: REGION})
+const s3 = new S3({region: REGION})
 
 function timestamp() {
   const date = new Date()
@@ -21,7 +25,7 @@ function timestamp() {
 }
 
 exports.handler = async (event) => { 
-  const params = {
+  const sqsParams = {
     MessageBody: JSON.stringify({
       date: timestamp(),  // YYYYMMDD
       from: 'Lambda-1 in Mira Tutorial',
@@ -33,9 +37,20 @@ exports.handler = async (event) => {
   }
   
   try {
-    const data = await sqs.sendMessage(params).promise()
+    console.log("BUCKET_NAME: ", BUCKET_NAME)
+    const data = await sqs.sendMessage(sqsParams).promise()
     console.log('DATA:')
     console.log(data)
+
+    const s3Params = {
+      Bucket: BUCKET_NAME,
+      Key: `data/${(new Date()) / 1}-${crypto.randomBytes(20).toString('hex')}.txt`,
+      Body: JSON.stringify(sqsParams)
+    }
+    console.log("s3Params")
+    console.log(s3Params)
+    const fileResult = await s3.putObject(s3Params).promise()
+    console.log(fileResult)
     return data
   } catch (ex) {
     console.log('EXCEPTION')

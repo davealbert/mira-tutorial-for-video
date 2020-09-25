@@ -1,0 +1,23 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - npm config set '//npm.pkg.github.com/:_authToken' $GH_NPM_READ_TOKEN
+      - cd infra/
+      - pwd
+      - npm install
+  pre_build:
+    commands:
+      - pwd
+      - npm run build
+  build:
+    commands:
+      - pwd
+      - npx mira deploy --file=../mira-tut-01-stack.ts  --env ${ENVIRONMENT} --role "$ROLE_ARN"
+  post_build:
+    commands:
+      - echo Build completed!
+artifacts:
+  files: '**/*'

@@ -1,22 +1,38 @@
 {
-  "account": "<YOUR AWS ACCOUNT>",
   "region": "eu-west-3",
   "app": {
     "name": "mira-tutorial",
     "prefix": "davealbert-mira"
   },
-  "baseDomain": "mira-tutorial",
-  "accounts": [
-    {
-      "name": "Default",
-      "env": {
-        "account": "<YOUR AWS ACCOUNT>",
-        "region": "eu-west-3"
+  "dev": {
+    "target": "staging"
+  },
+  "accounts": {
+      "staging": {
+        "env": {
+          "account": "630968979286",
+          "region": "eu-west-3"
+        },
+        "profile": "mira-training"
       },
-      "profile": "default",
-      "withDomain": true,
-      "webAppUrl": "davealbert-mira.davealbert-mira",
-      "requireManualApproval": false
+      "dev": {
+        "env": {
+          "account": "630968979286",
+          "region": "eu-west-3"
+        },
+        "profile": "mira-training"
+      }
+    },
+    "cicd": {
+      "account": "630968979286",
+      "buildspecFile": "./buildspec.yaml",
+      "provider": "codecommit",
+      "repositoryUrl": "https://github.com/davealbert/pl-github-archives-etl-final",
+      "branchName": "master",
+      "codeCommitUserPublicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjPAIk0K82A9mcJ/whV+euAVZJ1N+pTpxxWiF7Gu/BOUMdfNIXNrIG2AVhJYNs2fi2uaj60LC+2Vi50RxHvEqai8QU31mKQPmFAhpKIeXlhsfLKDPxYqwuGqAYX84MWksQQ5wooL+CBe7BxNVcbKMnGYiJUGKHxSjeukslCyo4qDoHKSzGu+Y6fRRWqJ3j/PhnbsxSaY/pIWmRksVZAGauAGmq+H0lkwqNfXv9kHs31/t2GR4pELejxGWNxGSLFeubLJJFo+S8ZbACPpW4w2kD1IiKJJDg5ku3OIwEBiluTIYOm5VVeVZPFyHLkRr3JzhCFZMeEZPvX1DBBsSYyYz/qNq2sDiaaFf9PCx71/XdIDljqKYKZZjsMNUqUSRauhXiINW77sTeAA/l+u/TQXYBUvYL+WzUDyJk7eo859+k6tStoZt9b+DsFhJ4oSJDAv1zWhJyYXegJkbiRgxhDus19/7xU6d2a/LiAq6vA5c6sUX/h1qZu1oMHMm5/LgUw9k=",
+      "environmentVariables": [],
+      "accounts": [
+        "staging"
+      ]
     }
-  ]
 }

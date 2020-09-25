@@ -17,6 +17,7 @@ const LAMBDA_ASSET_1 = '../lambda-1/lambda-1.zip'
 import { AutoDeleteBucket } from '@mobileposse/auto-delete-bucket'
 import { SqsDestination } from '@aws-cdk/aws-s3-notifications'
 import { EventType } from '@aws-cdk/aws-s3'
+import { SqsEventSource } from '@aws-cdk/aws-lambda-event-sources'
 const BUCKET_NAME = `${BASE_NAME.toLowerCase()}-bucket`
 const LAMBDA_ASSET_2 = '../lambda-2/lambda-2.zip'
 
@@ -43,11 +44,13 @@ export default class PlGithubEtlStack extends MiraStack {
       handler: 'index.handler',
       environment: {
         SQS_QUEUE_URL: sqs1.queueUrl,
-        REGION: AWS_REGION
+        REGION: AWS_REGION,
+        BUCKET_NAME: BUCKET_NAME
       }
     })
 
-    const expression = Schedule.expression('cron(0/10 * ? * * *)')
+
+    const expression = Schedule.expression('cron(0/2 * ? * * *)')
     const cron = new Rule(this, `${BASE_NAME}CronForLambda2`, {
       schedule: expression
     })
@@ -60,12 +63,27 @@ export default class PlGithubEtlStack extends MiraStack {
       bucketName: BUCKET_NAME,
       versioned: true
     })
+    bucket.grantReadWrite(lambda1)
 
-    // SQS-2 
+
+    // SQS-2
+    const sqs2 = new Queue(this, `${SQS_BASE_NAME}2`, {
+      queueName: `${SQS_BASE_NAME}2`
+    })
+    const sqs2Destination = new SqsDestination(sqs2)
+    bucket.addEventNotification(EventType.OBJECT_CREATED, sqs2Destination, { prefix: 'data/' })
 
 
-    // Lambda-2 -- Process SQS-1 message from SQS-1 and write file to S3
-    
-    
+    // Lambda-2 -- CRON Job to create SQS-2 message to kick off process
+    const lambda2 = new LambdaFunction(this, `${BASE_NAME}Lambda2Handler`, {
+      runtime: Runtime.NODEJS_12_X,
+      code: Code.fromAsset(LAMBDA_ASSET_2),
+      handler: 'index.handler',
+      environment: {
+        REGION: AWS_REGION
+      },
+      events: [new SqsEventSource(sqs2)]
+    })
+    bucket.grantRead(lambda2)
   }
 }

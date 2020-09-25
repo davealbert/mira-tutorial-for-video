@@ -5,30 +5,31 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc --watch",
-    "build": "concurrently 'tsc' 'npm run build:lambda1'",
+    "build": "concurrently 'tsc' 'npm run build:lambda1' 'npm run build:lambda2'",
     "build:lambda1": "cd ../lambda-1/; rm lambda-1.zip; npm ci; zip -r lambda-1.zip *",
     "build:lambda2": "cd ../lambda-2/; rm lambda-2.zip; npm ci; zip -r lambda-2.zip *",
-    "deploy": "tsc && mira deploy --file=mira-tut-01-stack.js",
+    "deploy": "mira deploy --file=mira-tut-01-stack.js",
     "undeploy": "mira undeploy --file=mira-tut-01-stack.js"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.36.1",
+    "@aws-cdk/assert": "1.49.1",
     "@types/node": "^10.17.24",
-    "aws-cdk": "1.36.1",
+    "aws-cdk": "1.49.1",
     "concurrently": "^5.2.0",
     "jest": "^25.5.0",
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "@aws-cdk/aws-events": "1.36.1",
-    "@aws-cdk/aws-events-targets": "1.36.1",
-    "@aws-cdk/aws-lambda": "1.36.1",
-    "@aws-cdk/aws-s3": "1.36.1",
-    "@aws-cdk/aws-s3-notifications": "1.36.1",
-    "@aws-cdk/aws-sqs": "1.36.1",
-    "@aws-cdk/core": "1.36.1",
-    "@aws-cdk/aws-iam": "1.36.1",
+    "@aws-cdk/aws-events": "1.49.1",
+    "@aws-cdk/aws-events-targets": "1.49.1",
+    "@aws-cdk/aws-lambda": "1.49.1",
+    "@aws-cdk/aws-s3": "1.49.1",
+    "@aws-cdk/aws-s3-notifications": "1.49.1",
+    "@aws-cdk/aws-sqs": "1.49.1",
+    "@aws-cdk/core": "1.49.1",
+    "@aws-cdk/aws-iam": "1.49.1",
+    "@aws-cdk/aws-lambda-event-sources": "1.49.1",
     "@mobileposse/auto-delete-bucket": "1.46.0",
-    "mira": "1.0.0"
+    "mira": "1.1.0"
   }
 }
